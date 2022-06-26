@@ -1,32 +1,13 @@
 import time
-import ctypes
-import os
+import json
 from pypresence import Presence
 
-#Declaring Variables
-small_img_key = None
-url = None
-button_name = None
-ClientID = None
-details = None
-status = None
-game = None
+with open("./Data/config.json") as f:
+    config = json.load(f)
 
-print("Black ops 3 = bo3")
-print("Phasmopobia = phasmo")
-print("Minecraft Java = java")
-print("Minecraft Bedrock = bedrock")
-print("Custom RPC = custom")
-game = input("Which game RPC would you like: ").lower()
-if game == "bo3":
-    large_img_key = "bo3"
-    small_img_key = "logo"
-    ClientID = "909565656549171272"
-    button_name = "Get Black Ops 3"
-    url = "https://store.steampowered.com/app/311210/Call_of_Duty_Black_Ops_III/"
-    status = "Wanna kill em together?"
-    details = "Curently Killin Zombies"
-elif game == "phasmo":
+game = config.get('game')
+
+if game == "phasmo":
     large_img_key = "logo"
     small_img_key = "steam"
     url = "https://store.steampowered.com/app/739630/Phasmophobia/"
@@ -34,6 +15,14 @@ elif game == "phasmo":
     ClientID = "913238116242948186"
     details = "Currently Ghost Huntin"
     status = "Why Not Join em!"
+elif game == "bo3":
+    large_img_key = "bo3"
+    small_img_key = "logo"
+    ClientID = "909565656549171272"
+    button_name = "Get Black Ops 3"
+    url = "https://store.steampowered.com/app/311210/Call_of_Duty_Black_Ops_III/"
+    status = "Wanna kill em together?"
+    details = "Curently Killin Zombies"
 elif game == "java":
     large_img_key = "java"
     small_img_key = "logo"
@@ -50,15 +39,7 @@ elif game == "bedrock":
     ClientID = "837920143195111475"
     details = "Feeding the Bees"
     status = "Why not kill em?"
-elif game == "custom":
-    large_img_key = input("What's your large image key? ")
-    small_img_key = input("What's your small image key? ")
-    url = input("What would you like your buttons url to be? ")
-    button_name = input ("What would you like your buttons name to be? ")
-    details = input("What's your details? ")
-    status = input("What's your status? ")
-    ClientID = input("What's your client ID: ")
-# Connecting to ClientID for RPC
+
 RPC = Presence(ClientID)
 RPC.connect()
 print("Succesfully Connected to RPC")
